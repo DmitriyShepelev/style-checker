@@ -1,0 +1,4 @@
+import static a;
+
+
+import b;

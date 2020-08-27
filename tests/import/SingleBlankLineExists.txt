@@ -1,0 +1,5 @@
+import static a;
+import static b;
+import c;
+import d;
+import e;
