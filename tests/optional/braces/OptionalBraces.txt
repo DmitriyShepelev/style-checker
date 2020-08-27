@@ -1,0 +1,14 @@
+package test;
+
+public class OptionalBraces {
+    public OptionalBraces() {
+        for (;;)
+            int w = 0;
+        if ()
+            int x = 1;
+        else
+            int y = 1;
+        while (true)
+            int z5 = 1;
+    }
+}
