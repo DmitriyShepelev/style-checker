@@ -1,0 +1,7 @@
+package test;
+
+public class 100CharacterLine {
+    public 100CharacterLine(Map<Integer, Map<Integer, Set<String>>> map, Set<String> setOfStrings) {
+
+    }
+}
