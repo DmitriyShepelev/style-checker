@@ -1,0 +1,6 @@
+package test;
+
+public class NoLineBreakBeforeClosingBrace {
+    public NoLineBreakBeforeClosingBrace() {
+        int x = 1;}
+}

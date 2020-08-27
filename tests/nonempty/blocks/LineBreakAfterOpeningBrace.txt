@@ -1,0 +1,9 @@
+package test;
+
+public class LineBreakAfterOpeningBrace {
+    public LineBreakAfterOpeningBrace() {
+        int x = 1;
+        if (x > 0) { x++;
+        }
+    }
+}
