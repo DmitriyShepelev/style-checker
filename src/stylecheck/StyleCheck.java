@@ -59,7 +59,7 @@ public final class StyleCheck {
     /**
      * Prompts user to select checkers.
      *
-     * @return boolean[] represented the selected checkers.
+     * @return boolean[] representing the selected checkers.
      */
     private static boolean[] selectCheckers() {
         Scanner scanner = new Scanner(System.in);
