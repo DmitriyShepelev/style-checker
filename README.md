@@ -9,6 +9,7 @@
 
 `make test`: Compiles and runs tests.
 
+`make clean`: Recursively removes the `build` directory.
 # About
 The Style Checker encompasses six checkers that check Java classes for style:
 
