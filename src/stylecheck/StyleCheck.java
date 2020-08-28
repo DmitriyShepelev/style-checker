@@ -15,7 +15,7 @@ import stylecheck.stylecheckers.OptionalBracesChecker;
 import stylecheck.stylecheckers.PackageChecker;
 
 /**
- * Stylistically checks java files.
+ * Stylistically checks Java classes.
  */
 public final class StyleCheck {
     private static final int NUM_CHECKERS = 6;
