@@ -3,7 +3,6 @@ import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Set;
 import org.junit.Test;
@@ -12,9 +11,9 @@ import stylecheck.StyleCheck;
 /**
  * Tests line length checker.
  */
-public class LineLengthCheckerTest {
+public final class LineLengthCheckerTest {
     @Test
-    public void testOver100CharacterLimit() throws FileNotFoundException {
+    public void testOver100CharacterLimit() {
         StyleCheck.lineLength = 100;
         Map<Integer, Set<String>> errors = StyleCheck.runCheckers(
                 StyleCheck.parse(new File("tests/line/length/Over100CharacterLimit.txt")),
@@ -28,10 +27,10 @@ public class LineLengthCheckerTest {
     }
 
     @Test
-    public void test100CharacterLine() throws FileNotFoundException {
+    public void test100CharacterLine() {
         StyleCheck.lineLength = 100;
         assertTrue(StyleCheck.runCheckers(
                 StyleCheck.parse(new File("tests/line/length/100CharacterLine.txt")),
-                new boolean[]{true, false, false, false, false}).isEmpty());
+                new boolean[] {true, false, false, false, false}).isEmpty());
     }
 }

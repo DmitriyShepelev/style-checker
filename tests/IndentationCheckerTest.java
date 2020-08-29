@@ -3,7 +3,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -13,8 +12,8 @@ import stylecheck.StyleCheck;
 /**
  * Tests indentation checker.
  */
-public class IndentationCheckerTest {
-    private void testIndentation(String filePath) throws FileNotFoundException {
+public final class IndentationCheckerTest {
+    private void testIndentation(String filePath) {
         StyleCheck.indentation = 4;
         Map<Integer, Set<String>> errors = StyleCheck.runCheckers(
                 StyleCheck.parse(new File(filePath)),
@@ -35,17 +34,17 @@ public class IndentationCheckerTest {
                      lineNumber + " : " + errorIterator.next());
     }
     @Test
-    public void lowIndentation() throws FileNotFoundException {
+    public void lowIndentation() {
         testIndentation("tests/indentation/IndentationLow.txt");
     }
 
     @Test
-    public void highIndentation() throws FileNotFoundException {
+    public void highIndentation() {
         testIndentation("tests/indentation/IndentationHigh.txt");
     }
 
     @Test
-    public void testLowAndHighIndentation() throws FileNotFoundException {
+    public void testLowAndHighIndentation() {
         testIndentation("tests/indentation/IndentationLowAndHigh.txt");
     }
 }

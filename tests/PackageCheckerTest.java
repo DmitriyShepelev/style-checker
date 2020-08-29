@@ -3,7 +3,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -13,9 +12,9 @@ import stylecheck.StyleCheck;
 /**
  * Tests the package checker.
  */
-public class PackageCheckerTest {
+public final class PackageCheckerTest {
     @Test
-    public void testAllLowercase() throws FileNotFoundException {
+    public void testAllLowercase() {
         Map<Integer, Set<String>> errors = StyleCheck.runCheckers(
                 StyleCheck.parse(new File("tests/package/PackageLowercaseName.txt")),
                 new boolean[] {false, false, false, false, false, true});
@@ -28,7 +27,7 @@ public class PackageCheckerTest {
     }
 
     @Test
-    public void testPresenceOfUnderscores() throws FileNotFoundException {
+    public void testPresenceOfUnderscores() {
         Map<Integer, Set<String>> errors = StyleCheck.runCheckers(
                 StyleCheck.parse(new File("tests/package/PackageWithUnderscore.txt")),
                 new boolean[] {false, false, false, false, false, true});
@@ -41,7 +40,7 @@ public class PackageCheckerTest {
     }
 
     @Test
-    public void testAllLowercaseWithPresenceOfUnderscores() throws FileNotFoundException {
+    public void testAllLowercaseWithPresenceOfUnderscores() {
         Map<Integer, Set<String>> errors = StyleCheck.runCheckers(StyleCheck
                                                      .parse(new File("tests/package" +
                                                      "/PackageWithUnderscoreAllLowercase" +

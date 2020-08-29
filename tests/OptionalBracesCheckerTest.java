@@ -3,7 +3,6 @@ import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -13,9 +12,9 @@ import stylecheck.StyleCheck;
 /**
  * Tests optional braces checker.
  */
-public class OptionalBracesCheckerTest {
+public final class OptionalBracesCheckerTest {
     @Test
-    public void testOptionalBraces() throws FileNotFoundException {
+    public void testOptionalBraces() {
         Map<Integer, Set<String>> errors = StyleCheck
                 .runCheckers(StyleCheck.parse(new File("tests/optional/braces/" +
                                                                "OptionalBraces.txt")),
