@@ -35,9 +35,16 @@ public final class NonemptyBlocksChecker {
         noLineBreakKeywords.add("while");
         noLineBreakKeywords.add("catch");
         noLineBreakKeywords.add("finally");
+        int braces = 0;
         for (Integer lineNumber : fileContents.keySet()) {
             String[] line = fileContents.get(lineNumber).trim().split(" ");
             String uncheckedStringLine = fileContents.get(lineNumber).trim();
+            if (uncheckedStringLine.contains("{")) {
+                braces++;
+            }
+            if (uncheckedStringLine.contains("}")) {
+                braces--;
+            }
             String stringLine = uncheckedStringLine;
             if (uncheckedStringLine.contains("//")) { // Account for internal comments.
                 stringLine = uncheckedStringLine.substring(0, uncheckedStringLine.indexOf("//"));
@@ -46,10 +53,9 @@ public final class NonemptyBlocksChecker {
                 if (stringLine.length() > 1 && stringLine.charAt(0) == '*' || s.equals("while") &&
                         !line[0].equals("while")) {
                     break;
-                } else if (keywords.contains(s) && !stringLine.contains("{}") &&
-                        stringLine.contains("{") && (stringLine.indexOf('{') !=
-                        stringLine.lastIndexOf('{') || !line[line.length - 1].equals("{") &&
-                        !uncheckedStringLine.contains("//"))) {
+                } else if ((keywords.contains(s) || braces == 2 && stringLine.contains("(")) &&
+                        !stringLine.contains("{}") && stringLine.contains("{") &&
+                        stringLine.charAt(stringLine.length() - 1) != '{') {
                     StyleCheck.addError(errors, lineNumber,
                             "Missing line break after the opening brace for this " +
                                     "nonempty block.");

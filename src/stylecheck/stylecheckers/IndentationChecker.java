@@ -1,5 +1,6 @@
 package stylecheck.stylecheckers;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import stylecheck.StyleCheck;
@@ -20,6 +21,15 @@ public final class IndentationChecker {
         int braces = 0;
         boolean casePresent = false;
         boolean defaultPresent = false;
+        boolean lineWrapped = false;
+        Set<String> keywords = new HashSet<>();
+        keywords.add("if");
+        keywords.add("for");
+        keywords.add("class");
+        keywords.add("catch");
+        keywords.add("switch");
+        keywords.add("while");
+        keywords.add("try");
         for (Integer lineNumber : fileContents.keySet()) {
             String line = fileContents.get(lineNumber);
             if (!line.equals("") && line.trim().charAt(0) != '*') {
@@ -29,6 +39,11 @@ public final class IndentationChecker {
                         defaultPresent = false;
                     }
                     braces--;
+                }
+                if ((braces == 1 || line.contains("if") || line.contains("switch") ||
+                    line.contains("for") || line.contains("while") || line.contains("catch")) &&
+                    line.contains("(") && !line.contains("{")) {
+                    lineWrapped = true;
                 }
                 if (line.contains(" default:")) {
                     braces--;
@@ -41,17 +56,31 @@ public final class IndentationChecker {
                     }
                     casePresent = true;
                 }
-                for (int i = 0; i < indentation * braces; i++) {
-                    if (line.charAt(i) != ' ') {
-                        StyleCheck.addError(errors, lineNumber,
-                                "Incorrect indentation.");
-                        break;
+                if (!lineWrapped) {
+                    for (int i = 0; i < indentation * braces; i++) {
+                        if (line.charAt(i) != ' ') {
+                            StyleCheck.addError(errors, lineNumber, "Incorrect " +
+                                    "indentation.");
+                            break;
+                        }
+                    }
+                    if (line.length() > 1 + indentation * braces &&
+                            line.charAt(indentation * braces) == ' ' &&
+                            line.charAt(1 + indentation * braces) != '*') {
+                        StyleCheck.addError(errors, lineNumber, "Incorrect " +
+                                "indentation.");
                     }
                 }
-                if (line.length() > 1 + indentation * braces &&
-                    line.charAt(indentation * braces) == ' ' &&
-                    line.charAt(1 + indentation * braces) != '*') {
-                    StyleCheck.addError(errors, lineNumber, "Incorrect indentation.");
+                if (lineWrapped && (line.contains("{") || line.contains(";"))) {
+                    lineWrapped = false;
+                }
+                if (!line.contains("if") && !line.contains("switch") && !line.contains("for") &&
+                        !line.contains("while") && !line.contains("catch") &&
+                        !line.contains("class") && !line.contains("else") &&
+                        !line.contains("finally") && !line.contains("try") &&
+                        !line.contains("do") && !line.contains("{}") &&
+                        line.charAt(line.length() - 1) != ';') {
+                    lineWrapped = true;
                 }
                 if (line.contains(" default:") || line.contains("{") || line.contains(" case ")) {
                     braces++;
