@@ -9,6 +9,9 @@ import java.util.Set;
 import org.junit.Test;
 import stylecheck.StyleCheck;
 
+/**
+ * Tests nonempty blocks checker.
+ */
 public class NonemptyBlocksCheckerTest {
     private void testNonemptyBlocks(String filePath, String errorMessage) throws
                                                                           FileNotFoundException {

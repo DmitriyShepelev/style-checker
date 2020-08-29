@@ -12,7 +12,7 @@ import stylecheck.StyleCheck;
 public final class NonemptyBlocksChecker {
     /**
      * Checks that braces follow the Kernighan and Ritchie style for nonempty blocks/block-like
-     * constructs. in particular, there is a line break after the opening brace, before the
+     * constructs. In particular, there is a line break after the opening brace, before the
      * closing brace, and after the closing brace (only if the closing brace terminates a
      * statement or the body of a named class or method).
      *

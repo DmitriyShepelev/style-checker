@@ -11,7 +11,7 @@ import org.junit.Test;
 import stylecheck.StyleCheck;
 
 /**
- * Tests the Package Checker.
+ * Tests the package checker.
  */
 public class PackageCheckerTest {
     @Test

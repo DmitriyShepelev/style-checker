@@ -9,6 +9,9 @@ import java.util.Set;
 import org.junit.Test;
 import stylecheck.StyleCheck;
 
+/**
+ * Tests line length checker.
+ */
 public class LineLengthCheckerTest {
     @Test
     public void testOver100CharacterLimit() throws FileNotFoundException {

@@ -39,7 +39,6 @@ public final class ImportChecker {
      */
     public static void check(Map<Integer, Set<String>> errors, Map<Integer, String> fileContents) {
         boolean isStatic = false;
-
         String previousLine = "";
         for (Integer lineNumber : fileContents.keySet()) {
             String[] line = fileContents.get(lineNumber).trim().split(" ");

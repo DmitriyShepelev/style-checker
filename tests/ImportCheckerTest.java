@@ -9,6 +9,9 @@ import java.util.Set;
 import org.junit.Test;
 import stylecheck.StyleCheck;
 
+/**
+ * Tests import checker.
+ */
 public class ImportCheckerTest {
     private void testImport(String filePath, String errorMessage) throws FileNotFoundException {
                             Map<Integer, Set<String>> errors = StyleCheck

@@ -10,6 +10,9 @@ import java.util.Set;
 import org.junit.Test;
 import stylecheck.StyleCheck;
 
+/**
+ * Tests optional braces checker.
+ */
 public class OptionalBracesCheckerTest {
     @Test
     public void testOptionalBraces() throws FileNotFoundException {
