@@ -37,8 +37,7 @@ public final class OptionalBracesChecker {
                     !line[0].equals("while"))) {
                     break;
                 }
-                if (optionalBracesStatements.contains(s) &&
-                        !line[line.length - 1].equals("{")) {
+                if (optionalBracesStatements.contains(s) && !line[line.length - 1].equals("{")) {
                     StyleCheck.addError(errors, lineNumber, "Braces must be used with" +
                             " if, else, for, do, and while statements, even if the body is empty " +
                             "or contains a single statement.");
