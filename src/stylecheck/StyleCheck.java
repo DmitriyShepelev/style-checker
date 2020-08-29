@@ -42,14 +42,14 @@ public final class StyleCheck {
     }
 
     /**
-     * Checks if the user's file exists.
+     * Checks if the user's file is an actual file.
      *
-     * @param file the file to check.
-     * @return true iff the file exists.
+     * @param file the file to check for actuality.
+     * @return true iff the file is an actual file.
      */
     private static boolean validateFile(File file) {
-        if (!file.exists()) {
-            System.err.println(file + " does not exist.");
+        if (!file.isFile()) {
+            System.err.println(file + " is not a file.");
             System.out.println();
             return false;
         }
@@ -127,7 +127,7 @@ public final class StyleCheck {
     }
 
     /**
-     * Validates the user's input.
+     * Validates user's input.
      *
      * @param userInput the user's input.
      * @return true iff the user's input is numeric and non-negative.
@@ -159,16 +159,20 @@ public final class StyleCheck {
      * Parses a file.
      *
      * @param file the file to parse.
-     * @return a Map&lt;Integer, String&gt; mapping line numbers to their code.
-     * @throws FileNotFoundException if the file specified by a path name cannot be opened.
+     * @return a Map&lt;Integer, String&gt; mapping line numbers to their code, if the file can
+     * be successfully opened; otherwise, return null.
      */
-    public static Map<Integer, String> parse(File file) throws FileNotFoundException {
+    public static Map<Integer, String> parse(File file) {
         Map<Integer, String> fileContents = new TreeMap<>();
-        Scanner input = new Scanner(file);
-        int lineNumber = 1;
-        while (input.hasNextLine()) {
-            fileContents.put(lineNumber, input.nextLine());
-            lineNumber++;
+        try (Scanner input = new Scanner(file)) {
+            int lineNumber = 1;
+            while (input.hasNextLine()) {
+                fileContents.put(lineNumber, input.nextLine());
+                lineNumber++;
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+            return null;
         }
         return fileContents;
     }
@@ -246,12 +250,28 @@ public final class StyleCheck {
     }
 
     /**
+     * Prompts user to rerun the Style Checker.
+     *
+     * @return true iff the user elects to rerun the Style Checker.
+     */
+    private static boolean rerunCheckers() {
+        System.out.print("Would you like to check another file? (y/n) ");
+        Scanner input = new Scanner(System.in);
+        return input.nextLine().toLowerCase().charAt(0) == 'y';
+    }
+
+    /**
      * Runs the command line application.
      *
-     * @param args the commend line application.
-     * @throws FileNotFoundException if the file specified by a path name cannot be opened.
+     * @param args the command line arguments.
      */
-    public static void main(String[] args) throws FileNotFoundException {
-        displayErrors(runCheckers(parse(introduction()), selectCheckers()));
+    public static void main(String[] args) {
+        do {
+            Map<Integer, String> fileContents;
+            do {
+                fileContents = parse(introduction());
+            } while (fileContents == null);
+            displayErrors(runCheckers(fileContents, selectCheckers()));
+        } while (rerunCheckers());
     }
 }
