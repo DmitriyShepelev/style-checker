@@ -7,8 +7,7 @@ import stylecheck.StyleCheck;
 
 /**
  * Checks that braces are used with do, while, else, String for, and if statements, even if the
- * body
- * contains only a single statement or is empty.
+ * body contains only a single statement or is empty.
  */
 public final class OptionalBracesChecker {
     /**
