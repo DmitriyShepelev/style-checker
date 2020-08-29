@@ -21,7 +21,8 @@ The Style Checker encompasses six checkers that check Java classes for style:
   * Static imports appear in a single block, and a single blank line separates static imports
    from non-static imports.
 
-* **Indentation Checker**: Checks that each line is indented by a user-specified number of spaces.
+* **Indentation Checker**: Checks that each line is indented by a user-specified number of spaces
+. (**Note**: Lines that are wrapped are ignored.)
 
 * **Nonempty Blocks Checker**: Checks that braces follow the 
 [Kernighan and Ritchie style](https://en.wikipedia.org/wiki/Indentation_style#K&R_style) for nonempty
