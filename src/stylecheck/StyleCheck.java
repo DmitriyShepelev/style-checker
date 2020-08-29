@@ -35,7 +35,7 @@ public final class StyleCheck {
         do {
             System.out.println("Welcome to the style checker!");
             System.out.print("To begin, please type the java file you'd like to check: ");
-            String file = scanner.next();
+            String file = scanner.nextLine();
             f = new File(file);
         } while (!validateFile(f));
         return f;
@@ -100,50 +100,41 @@ public final class StyleCheck {
                                            "empty.");
                 System.out.println("5 : Package Checker: Checks that package names are lowercase " +
                                            "and do not contain underscores.");
-                response = scanner.next().toLowerCase().charAt(0);
+                response = scanner.nextLine().toLowerCase().charAt(0);
             } while (!validateSelection(response));
             selectedCheckers[Character.getNumericValue(response)] = true;
             if (Character.getNumericValue(response) == 0) {
-                System.out.println("What would you like the length of each line to be? (please " +
-                                           "enter numeric input)");
+                String userInput;
                 do {
-                    lineLength = Integer.parseInt(scanner.next());
-                } while (!validateLineLength());
+                    System.out.println("What would you like the length of each line to be? " +
+                                               "(please enter non-negative numeric input)");
+                    userInput = scanner.nextLine();
+                } while (!validateUserInput(userInput));
+                lineLength = Integer.parseInt(userInput);
             } else if (Character.getNumericValue(response) == 2) {
-                System.out.println("By how many spaces should each indent increase? (Please enter" +
-                                           " numeric input)");
+                String userInput;
                 do {
-                    indentation = Integer.parseInt(scanner.next());
-                } while (!validateIndentation());
+                    System.out.println("By how many spaces should each indent increase? (Please" +
+                                               " enter non-negative numeric input)");
+                    userInput = scanner.nextLine();
+                } while (!validateUserInput(userInput));
+                indentation = Integer.parseInt(userInput);
             }
             System.out.println("Would you like to select an additional checker? (y/n)");
-            response = scanner.next().toLowerCase().charAt(0);
+            response = scanner.nextLine().toLowerCase().charAt(0);
         } while (response == 'y');
         return selectedCheckers;
     }
 
     /**
-     * Validates that the user-specified line length is non-negative.
+     * Validates the user's input.
      *
-     * @return true iff the user-specified line length is non-negative.
+     * @param userInput the user's input.
+     * @return true iff the user's input is numeric and non-negative.
      */
-    private static boolean validateLineLength() {
-        if (lineLength < 0) {
-            System.err.println("The length of each line must be non-negative.");
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Validates that the user-specified indentation is non-negative.
-     *
-     * @return true iff the user-specified indentation is non-negative.
-     */
-    private static boolean validateIndentation() {
-        if (indentation < 0) {
-            System.err.println("The number of spaces by which each indent should increase must be" +
-                                       " non-negative.");
+    private static boolean validateUserInput(String userInput) {
+        if (!userInput.matches("^\\d+$")) {
+            System.err.println("Your input must be numeric and non-negative.");
             return false;
         }
         return true;
@@ -169,7 +160,7 @@ public final class StyleCheck {
      *
      * @param file the file to parse.
      * @return a Map&lt;Integer, String&gt; mapping line numbers to their code.
-     * @throws FileNotFoundException if the file specified by a pathname cannot be opened.
+     * @throws FileNotFoundException if the file specified by a path name cannot be opened.
      */
     public static Map<Integer, String> parse(File file) throws FileNotFoundException {
         Map<Integer, String> fileContents = new TreeMap<>();
@@ -182,6 +173,13 @@ public final class StyleCheck {
         return fileContents;
     }
 
+    /**
+     * Adds an error.
+     *
+     * @param errors a map from line numbers to their errors.
+     * @param lineNumber the error's line number.
+     * @param errorMessage the error message.
+     */
     public static void addError(Map<Integer, Set<String>> errors, int lineNumber,
                                 String errorMessage) {
         if (!errors.containsKey(lineNumber)) {
@@ -251,7 +249,7 @@ public final class StyleCheck {
      * Runs the command line application.
      *
      * @param args the commend line application.
-     * @throws FileNotFoundException if the file specified by a pathname cannot be opened.
+     * @throws FileNotFoundException if the file specified by a path name cannot be opened.
      */
     public static void main(String[] args) throws FileNotFoundException {
         displayErrors(runCheckers(parse(introduction()), selectCheckers()));
