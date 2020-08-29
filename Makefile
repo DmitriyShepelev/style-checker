@@ -41,7 +41,7 @@ test: jar $(IMPORT_CHECKER_TEST_CLASS_PATH) $(LINE_LENGTH_CHECKER_TEST_CLASS_PAT
 $(INDENTATION_CHECKER_TEST_CLASS_PATH) $(NONEMPTY_BLOCKS_CHECKER_TEST_CLASS_PATH) \
 $(OPTIONAL_BRACES_CHECKER_TEST_CLASS_PATH) $(PACKAGE_CHECKER_TEST_CLASS_PATH)
 	java -cp \
-	build/stylechecker.jar:build/classes:build/lib/junit-4.13.jar:build/lib/hamcrest-2.2.jar \
+	build/stylechecker.jar:build/classes:build/testClasses:build/lib/junit-4.13.jar:build/lib/hamcrest-2.2.jar \
 	org.junit.runner.JUnitCore ImportCheckerTest LineLengthCheckerTest IndentationCheckerTest \
 	NonemptyBlocksCheckerTest OptionalBracesCheckerTest PackageCheckerTest
 
