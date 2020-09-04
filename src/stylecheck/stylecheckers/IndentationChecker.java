@@ -1,6 +1,5 @@
 package stylecheck.stylecheckers;
 
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import stylecheck.StyleCheck;
@@ -22,14 +21,6 @@ public final class IndentationChecker {
         boolean casePresent = false;
         boolean defaultPresent = false;
         boolean lineWrapped = false;
-        Set<String> keywords = new HashSet<>();
-        keywords.add("if");
-        keywords.add("for");
-        keywords.add("class");
-        keywords.add("catch");
-        keywords.add("switch");
-        keywords.add("while");
-        keywords.add("try");
         for (Integer lineNumber : fileContents.keySet()) {
             String line = fileContents.get(lineNumber);
             if (!line.equals("") && line.trim().charAt(0) != '*') {
