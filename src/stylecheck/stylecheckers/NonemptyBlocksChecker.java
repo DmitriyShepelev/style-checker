@@ -38,38 +38,38 @@ public final class NonemptyBlocksChecker {
         int braces = 0;
         for (Integer lineNumber : fileContents.keySet()) {
             String[] line = fileContents.get(lineNumber).trim().split(" ");
-            String uncheckedStringLine = fileContents.get(lineNumber).trim();
-            if (uncheckedStringLine.contains("{")) {
+            String uncheckedLine = fileContents.get(lineNumber).trim();
+            if (uncheckedLine.contains("{")) {
                 braces++;
             }
-            if (uncheckedStringLine.contains("}")) {
+            if (uncheckedLine.contains("}")) {
                 braces--;
             }
-            String stringLine = uncheckedStringLine;
-            if (uncheckedStringLine.contains("//")) { // Account for internal comments.
-                stringLine = uncheckedStringLine.substring(0, uncheckedStringLine.indexOf("//"));
+            String checkedLine = uncheckedLine;
+            if (uncheckedLine.contains("//")) { // Account for internal comments.
+                checkedLine = uncheckedLine.substring(0, uncheckedLine.indexOf("//"));
             }
             for (String s : line) {
-                if (stringLine.length() > 1 && stringLine.charAt(0) == '*' || s.equals("while") &&
+                if (checkedLine.length() > 1 && checkedLine.charAt(0) == '*' || s.equals("while") &&
                         !line[0].equals("while")) {
                     break;
-                } else if ((keywords.contains(s) || braces == 2 && stringLine.contains("(")) &&
-                        !stringLine.contains("{}") && stringLine.contains("{") &&
-                        stringLine.charAt(stringLine.length() - 1) != '{') {
+                } else if ((keywords.contains(s) || braces == 2 && checkedLine.contains("(")) &&
+                        !checkedLine.contains("{}") && checkedLine.contains("{") &&
+                        checkedLine.charAt(checkedLine.length() - 1) != '{') {
                     StyleCheck.addError(errors, lineNumber,
                             "Missing line break after the opening brace for this " +
                                     "nonempty block.");
                 } else if (line[0].equals("{")) {
                     StyleCheck.addError(errors, lineNumber,
                              "Line breaks are disallowed before the opening brace.");
-                } else if (!keywords.contains(s) && !stringLine.contains("{}") &&
-                            stringLine.length() > 1 && stringLine.lastIndexOf('}') ==
-                            stringLine.length() - 1) {
+                } else if (!keywords.contains(s) && !checkedLine.contains("{}") &&
+                            checkedLine.length() > 1 && checkedLine.lastIndexOf('}') ==
+                            checkedLine.length() - 1) {
                     StyleCheck.addError(errors, lineNumber,
                              "Missing line break before the closing brace.");
                 } else if (line.length > 1 && !noLineBreakKeywords.contains(line[1]) &&
-                        stringLine.contains("}") && stringLine.indexOf("}") !=
-                        stringLine.length() - 1) {
+                        checkedLine.contains("}") && checkedLine.indexOf("}") !=
+                        checkedLine.length() - 1) {
                     StyleCheck.addError(errors, lineNumber, "Missing line break after" +
                             " the closing brace (only if the closing brace terminates a statement" +
                             " or the body of a named class or method).");
